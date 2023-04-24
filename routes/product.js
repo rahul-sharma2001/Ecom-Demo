@@ -10,6 +10,7 @@ router.post('/',verifyToken,controllers.addProduct);
 router.get('/',verifyToken,controllers.getAllProducts);
 router.put('/:productId',verifyToken,controllers.updateProduct);
 router.delete('/:productId',verifyToken,controllers.deleteProduct);
+router.get('/sort',verifyToken,controllers.sortProducts);
 
 
 

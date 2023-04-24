@@ -85,5 +85,19 @@ class ProductService {
             throw err
         }
     }
+    sortProducts= async(sortparams)=>{
+        try{
+            let {sort,limit=10,offset=0,order='asc'}= sortparams
+            let orderNumber=1;
+            order=='asc'?orderNumber=1:orderNumber=-1;
+            const count  = await productModel.find({}).sort({[sort]:orderNumber}).countDocuments();
+            const sortedProducts = await productModel.find({}).sort({[sort]:orderNumber}).skip(offset).limit(limit);
+            return [sortedProducts,count];
+        }
+        catch(err){
+            console.log(err);
+            throw err;
+        }
+    }
 }
 module.exports = ProductService;

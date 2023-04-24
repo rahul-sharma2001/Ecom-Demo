@@ -1,6 +1,7 @@
 const ProductService = require('../Services/product');
 const productServiceInstance = new ProductService();
 const jwt = require('jsonwebtoken');
+const productModel = require('../model/product');
 const getAllProducts = async (req,res)=>{
     try{
         let [products,productsCount] = await productServiceInstance.getAllProducts(req.query);
@@ -110,4 +111,28 @@ const imageUpload = async(req,res)=>{
     
 
 }
-module.exports = {addProduct,getAllProducts,updateProduct,deleteProduct,imageUpload};
+const sortProducts= async(req,res)=>{
+   try{
+    const sortParams = req.query;
+    const [sortedProducts,count] = await productServiceInstance.sortProducts(sortParams);
+    if(sortedProducts){
+        res.status(200).json({
+            message:"Fetched Sorted Products succesfully",
+            count,
+            fetchedCount:sortedProducts.length,
+            data:sortedProducts
+        })
+    }
+    else{
+        res.status(404).json({
+            message:"sort not found"
+        })
+
+    }
+    
+   }
+   catch(err){
+    res.status(500).json("Server Error could not sort products");
+    }
+}
+module.exports = {addProduct,getAllProducts,updateProduct,deleteProduct,imageUpload,sortProducts};
