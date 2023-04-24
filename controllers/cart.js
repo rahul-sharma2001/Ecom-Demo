@@ -41,7 +41,6 @@ const addProductToCart = async(req,res)=>{
         }
     }
     catch(err){
-        console.log(err);
         res.status(500).json({
             message:"Server Error cannot add product to cart"
         })
@@ -68,34 +67,5 @@ const getCart = async (req,res)=>{
         })
     }
 }
-// const deleteCart = async (req, res) => {
-//     try{
-//         const userId = req.params.userId;
-//         const productId = req.query.productId;
-//         const queryData = {
-//             userId,
-//             productId
-//         }
-//         const deletedProduct = await cartServiceInstance.addProductToCart(queryData);
-//         if(deletedProduct){
-//             res.status(200).json({
-//                 message:"Product successfully deleted from the cart",
-//                 data: deletedProduct
-//             })
-//         } 
-//         else{
-//             res.status(404).json({
-//                 message:"either product does not exist or user does not exist"
-//             })
-//         }
-//     }
-//     catch(err){
-//         console.log(err);
-//         res.status(500).json({
-//             message:"Server Error cannot add delete product to cart"
-//         })
-//     }
-    
-// }
 
 module.exports = { createCart,addProductToCart,getCart }

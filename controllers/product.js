@@ -1,5 +1,6 @@
 const ProductService = require('../Services/product');
 const productServiceInstance = new ProductService();
+const jwt = require('jsonwebtoken');
 const getAllProducts = async (req,res)=>{
     try{
         let [products,productsCount] = await productServiceInstance.getAllProducts(req.query);
@@ -17,7 +18,6 @@ const getAllProducts = async (req,res)=>{
             })
         }
     }catch(err){
-        console.log(err);
         res.status(500).json({
             message:"Server Error "
         })
@@ -34,13 +34,7 @@ const addProduct = async (req,res)=>{
                 data:product
             })
         }
-        else{
-            res.status(404).json({
-                message:"Could not Add product"
-            })
-        }
     }catch(err){
-        console.log(err);
         res.status(500).json({
             message:"Server Error please enter product details correctly"
         })
@@ -97,4 +91,23 @@ const deleteProduct = async (req,res)=>{
    
     
 }
-module.exports = {addProduct,getAllProducts,updateProduct,deleteProduct};
+const imageUpload = async(req,res)=>{
+    try{
+        let files = req.files;
+        let urls = await productServiceInstance.imageUpload(files);
+        if(urls){
+            res.status(200).json({
+                message:"images uploaded successfully on server",
+                data:product
+            })
+        }
+    }catch(err){
+        res.status(500).json({
+            message:"Server Error could not upload images "
+        })
+    }
+
+    
+
+}
+module.exports = {addProduct,getAllProducts,updateProduct,deleteProduct,imageUpload};

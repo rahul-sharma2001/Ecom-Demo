@@ -26,7 +26,6 @@ class UserService{
                 } 
             }
             let {email,password}= loginData
-            console.log(email,password);
             let userData = await userModel.findOne({'email':email});
             if(!userData){
                 return{
@@ -35,15 +34,11 @@ class UserService{
                 }
             }
             else{
-                console.log(userData);
                 let encryptedPassword = userData.password
-                console.log(encryptedPassword);
                 let check =await bcrypt.compare(password,encryptedPassword);
                 if(check){
                     const token = jwt.sign({userData},process.env.SECRET_KEY,{expiresIn:7200})
                     userData.token = token;
-                    console.log(userData.token)
-                    console.log(token,userData)
                     return {
                         status:true,
                         userData:userData,
@@ -60,7 +55,7 @@ class UserService{
             }
         }
         catch(err){
-            console.log(err)
+            throw err
         }
        
        

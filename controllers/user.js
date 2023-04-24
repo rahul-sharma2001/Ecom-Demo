@@ -1,7 +1,5 @@
 const UserService = require('../Services/user');
 const userServiceInstance = new UserService();
-const jwt = require('jsonwebtoken');
-
 const addUser = async(req,res)=>{
 
     try{
@@ -12,12 +10,6 @@ const addUser = async(req,res)=>{
             data:newUser
         })
     }
-    else{
-        res.status(404).json({
-            message:"could not add user"
-        })
-    }
-
     }
     catch(err){
         res.status(500).json({
@@ -29,7 +21,6 @@ const addUser = async(req,res)=>{
 const login = async(req,res)=>{
     try{
     const user = await userServiceInstance.login(req.body);
-    console.log(user);
     if(user.status===false){
         res.status(401).json(user);
     }
